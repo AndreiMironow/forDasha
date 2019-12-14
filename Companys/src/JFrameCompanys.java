@@ -2,11 +2,8 @@
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -1405,14 +1402,14 @@ public class JFrameCompanys extends JFrame {
     private boolean getDataSpecialization(CSpecialization specialization) {
         
         String company_name = (String) jComboBox_list_company_in_specialization.getSelectedItem();
-        if (company_name.isEmpty()) {
+        if (company_name == null || company_name.isEmpty()) {
             JOptionPane.showMessageDialog(JFrameCompanys.this, 
                 "Не задано поле : " + jLabel_list_company_in_specialization.getText());
             return false;
         }
 
         String service_name = (String) jComboBox_list_service_in_specialization.getSelectedItem();
-        if (service_name.isEmpty()) {
+        if (service_name == null || service_name.isEmpty()) {
             JOptionPane.showMessageDialog(JFrameCompanys.this, 
                 "Не задано поле : " + jLabel_list_service_in_specialization.getText());
             return false;
@@ -1515,28 +1512,28 @@ public class JFrameCompanys extends JFrame {
         int rating = eRating.getRating();
         
         String company_name = (String) jComboBox_list_company_in_order.getSelectedItem();
-        if (company_name.isEmpty()) {
+        if (company_name == null || company_name.isEmpty()) {
             JOptionPane.showMessageDialog(JFrameCompanys.this, 
                 "Не задано поле : " + jLabel_list_company_in_order.getText());
             return false;
         }
 
         String service_name = (String) jComboBox_list_service_in_order.getSelectedItem();
-        if (service_name.isEmpty()) {
+        if (service_name == null || service_name.isEmpty()) {
             JOptionPane.showMessageDialog(JFrameCompanys.this, 
                 "Не задано поле : " + jLabel_list_service_in_order.getText());
             return false;
         }
         
         String full_name = (String) jComboBox_list_full_name.getSelectedItem();
-        if (full_name.isEmpty()) {
+        if (full_name == null || full_name.isEmpty()) {
             JOptionPane.showMessageDialog(JFrameCompanys.this, 
                 "Не задано поле : " + jLabel_list_full_name.getText());
             return false;
         }
         
         String personal_address = (String) jComboBox_list_personal_address.getSelectedItem();
-        if (personal_address.isEmpty()) {
+        if (personal_address == null || personal_address.isEmpty()) {
             JOptionPane.showMessageDialog(JFrameCompanys.this, 
                 "Не задано поле : " + jLabel_list_personal_address.getText());
             return false;

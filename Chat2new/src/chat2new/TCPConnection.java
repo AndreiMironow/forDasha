@@ -30,7 +30,7 @@ public class TCPConnection {
         this.listener = listener;
         this.socket = socket;
         
-        // Берем входной и выходной потоки сокета,чтобы получать и отсылать данные
+        // Берем входной и выходной потоки сокета,чтобы получать и отсылать сообщения
         // ... и конвертируем потоки в другой тип, чтоб легче обрабатывать сообщения
         input  = new DataInputStream(socket.getInputStream());
         output = new DataOutputStream(socket.getOutputStream());
@@ -87,6 +87,8 @@ public class TCPConnection {
             output.flush();
             fileInput.close();
         } catch (IOException e) {
+            listener.onException(TCPConnection.this, e);
+            disconnect();
         }
     }
     

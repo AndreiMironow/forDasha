@@ -16,7 +16,7 @@ public enum ERating {
     
     @Override
     public String toString() {
-        return text;
+        return Integer.toString(rating) + " : " + text;
     }
 
     public int getRating() {

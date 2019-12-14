@@ -124,9 +124,6 @@ public class CDataCompanys {
      
     private void insertTableCompany(CCompany company) throws SQLException {
         
-        if (!controlTableCompany())
-            createTableCompany();
-        
         //добавляем запись
         String insertTableSQL = "INSERT INTO company"
             + "(company_name, address, holder, phone_number) VALUES ("
@@ -215,9 +212,6 @@ public class CDataCompanys {
     }
      
     private void insertTableService(CService service) throws SQLException {
-        
-        if (!controlTableService())
-            createTableService();
         
         //добавляем запись
         String insertTableSQL = "INSERT INTO service"
@@ -309,9 +303,6 @@ public class CDataCompanys {
      
     private void insertTableSpecialization(CSpecialization specialization) throws SQLException {
         
-        if (!controlTableSpecialization())
-            createTableSpecialization();
-        
         //добавляем запись
         String insertTableSQL = "INSERT INTO specialization"
             + "(company_name, service_name, price) VALUES ("
@@ -400,9 +391,6 @@ public class CDataCompanys {
     }
      
     private void insertTableClient(CClient client) throws SQLException {
-        
-        if (!controlTableClient())
-            createTableClient();
         
         //добавляем запись
         String insertTableSQL = "INSERT INTO client"
@@ -510,9 +498,6 @@ public class CDataCompanys {
      
     private void insertTableOrder(COrder order) throws SQLException {
         
-        if (!controlTableOrder())
-            createTableOrder();
-        
         //добавляем запись
         String insertTableSQL = "INSERT INTO order_"
             + "(date_of_order, time_of_order, employee_full_name, rating,"
@@ -584,6 +569,9 @@ public class CDataCompanys {
     
     public void saveCompany (CCompany company) throws SQLException {
         
+        if (!controlTableCompany())
+            createTableCompany();
+        
         if (controlSelectTableCompany(company))
             updateTableCompany(company);
         else
@@ -591,6 +579,9 @@ public class CDataCompanys {
     }
 
     public void saveService(CService service) throws SQLException {
+        
+        if (!controlTableService())
+            createTableService();
         
         if (controlSelectTableService(service))
             updateTableService(service);
@@ -600,6 +591,9 @@ public class CDataCompanys {
     
     public void saveSpecialization(CSpecialization specialization) throws SQLException {
         
+        if (!controlTableSpecialization())
+            createTableSpecialization();
+        
         if (controlSelectTableSpecialization(specialization))
             updateTableSpecialization(specialization);
         else
@@ -608,6 +602,9 @@ public class CDataCompanys {
 
     public void saveClient(CClient client) throws SQLException {
         
+        if (!controlTableClient())
+            createTableClient();
+        
         if (controlSelectTableClient(client))
             updateTableClient(client);
         else
@@ -615,6 +612,9 @@ public class CDataCompanys {
     }
 
     public void saveOrder (COrder order) throws SQLException {
+        
+        if (!controlTableOrder())
+            createTableOrder();
         
         if (controlSelectTableOrder(order))
             updateTableOrder(order);
