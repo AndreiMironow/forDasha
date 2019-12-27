@@ -73,11 +73,11 @@ public class CDataCompanys {
 
     private boolean controlTableCompany() throws SQLException {
         
-        //проверяем существование таблицы
+        //проверяем существование таблицы в базе данных
         String controlTableSQL = "SELECT * FROM information_schema.tables"
             + " WHERE table_catalog = '" + database_name + "' AND table_name = 'company'";
-        ResultSet resulControl = statement.executeQuery(controlTableSQL);
-        return resulControl.next();
+        ResultSet resultControl = statement.executeQuery(controlTableSQL);
+        return resultControl.next();
     }
      
     private void createTableCompany() throws SQLException {
@@ -90,11 +90,15 @@ public class CDataCompanys {
             + " holder       varchar(128) NOT NULL," 
             + " phone_number varchar CONSTRAINT phone_check NOT NULL, CHECK (length(phone_number) = 11)," 
             + " UNIQUE (company_name) )";
-        statement.execute(createTableSQL);
+        boolean result = statement.execute(createTableSQL);
+        if (result) {
+           System.out.println("Создана таблица : company"); 
+        }
     }
     
     private boolean controlSelectTableCompany(CCompany company) throws SQLException {
         
+        //проверяем существование заданной компании в таблице 
         String selectTableSQL = "SELECT * FROM company"
             + " WHERE id = " + "'" + company.id + "'";
         ResultSet resultSelect = statement.executeQuery(selectTableSQL);
@@ -103,7 +107,7 @@ public class CDataCompanys {
      
     private List<CCompany> selectTableCompany() throws SQLException {
         
-        //список компаний
+        //получаем список компаний
         List<CCompany> listCompany = new ArrayList<>();
         if (controlTableCompany()) {
             //выбираем данные из таблицы
@@ -131,7 +135,10 @@ public class CDataCompanys {
             + "'" + company.address      + "',"
             + "'" + company.holder       + "',"    
             + "'" + company.phone_number + "')";
-        statement.executeUpdate(insertTableSQL);
+        int result = statement.executeUpdate(insertTableSQL);
+        if (result > 0) {
+           System.out.println("Добавлена компания : " + company);
+        }
     }
      
     private void updateTableCompany(CCompany company) throws SQLException {
@@ -169,8 +176,8 @@ public class CDataCompanys {
         //проверяем существование таблицы
         String controlTableSQL = "SELECT * FROM information_schema.tables"
             + " WHERE table_catalog = '" + database_name + "' AND table_name = 'service'";
-        ResultSet resulControl = statement.executeQuery(controlTableSQL);
-        return resulControl.next();
+        ResultSet resultControl = statement.executeQuery(controlTableSQL);
+        return resultControl.next();
     }
      
     private void createTableService() throws SQLException {
@@ -181,7 +188,10 @@ public class CDataCompanys {
             + " service_name varchar(128) NOT NULL,"
             + " service_area varchar(128) NOT NULL," 
             + " UNIQUE (service_name) )";
-        statement.execute(createTableSQL);
+        boolean result = statement.execute(createTableSQL);
+        if (result) {
+           System.out.println("Создана таблица : service"); 
+        }
     }
      
     private boolean controlSelectTableService(CService service) throws SQLException {
@@ -218,7 +228,11 @@ public class CDataCompanys {
             + "(service_name, service_area) VALUES ("
             + "'" + service.service_name + "',"
             + "'" + service.service_area + "')";
-        statement.executeUpdate(insertTableSQL);
+        //количество добавленных записей (в нашем случае 1)
+        int result = statement.executeUpdate(insertTableSQL);
+        if (result > 0) {
+           System.out.println("Добавлена услуга : " + service);
+        }
     }
      
     private void updateTableService(CService service) throws SQLException {
@@ -254,14 +268,14 @@ public class CDataCompanys {
         //проверяем существование таблицы
         String controlTableSQL = "SELECT * FROM information_schema.tables"
             + " WHERE table_catalog = '" + database_name + "' AND table_name = 'specialization'";
-        ResultSet resulControl = statement.executeQuery(controlTableSQL);
-        return resulControl.next();
+        ResultSet resultControl = statement.executeQuery(controlTableSQL);
+        return resultControl.next();
     }
      
     private void createTableSpecialization() throws SQLException {
         
         //создаем таблицу
-        String createTableSQL = "CREATE TABLE public.specialization ("
+        String createTableSQL = "CREATE TABLE specialization ("
             + "	company_name varchar(128) NOT NULL,"
             + "	service_name varchar(128) NOT NULL,"
             + "	price        int NOT NULL,"
@@ -270,11 +284,15 @@ public class CDataCompanys {
             + " ON UPDATE CASCADE ON DELETE CASCADE,"
             + "	FOREIGN KEY (service_name) REFERENCES service (service_name)"
             + " ON UPDATE CASCADE ON DELETE CASCADE )";
-        statement.execute(createTableSQL);
+        boolean result = statement.execute(createTableSQL);
+        if (result) {
+           System.out.println("Создана таблица : specialization"); 
+        }
     }
      
     private boolean controlSelectTableSpecialization(CSpecialization specialization) throws SQLException {
         
+        //проверяем, выполняет ли компания заданную услугу
         String selectTableSQL = "SELECT * FROM specialization"
             + " WHERE company_name = " + "'" + specialization.company_name + "'"
             + " AND   service_name = " + "'" + specialization.service_name + "'";
@@ -346,8 +364,8 @@ public class CDataCompanys {
         //проверяем существование таблицы
         String controlTableSQL = "SELECT * FROM information_schema.tables"
             + " WHERE table_catalog = '" + database_name + "' AND table_name = 'client'";
-        ResultSet resulControl = statement.executeQuery(controlTableSQL);
-        return resulControl.next();
+        ResultSet resultControl = statement.executeQuery(controlTableSQL);
+        return resultControl.next();
     }
      
     private void createTableClient() throws SQLException {
@@ -359,7 +377,10 @@ public class CDataCompanys {
             + " personal_address      varchar(256) NOT NULL,"    
             + " personal_phone_number varchar CONSTRAINT phone_check NOT NULL, CHECK (length(personal_phone_number) = 11),"
             + " UNIQUE (full_name, personal_address) )";
-        statement.execute(createTableSQL);
+        boolean result = statement.execute(createTableSQL);
+        if (result) {
+           System.out.println("Создана таблица : client"); 
+        }
     }
      
     private boolean controlSelectTableClient(CClient client) throws SQLException {
@@ -398,7 +419,10 @@ public class CDataCompanys {
             + "'" + client.full_name             + "',"
             + "'" + client.personal_address      + "',"    
             + "'" + client.personal_phone_number + "')";
-        statement.executeUpdate(insertTableSQL);
+        int result = statement.executeUpdate(insertTableSQL);
+        if (result > 0) {
+           System.out.println("Добавлен клиент : " + client);
+        }
     }
      
     private void updateTableClient(CClient client) throws SQLException {
@@ -435,14 +459,14 @@ public class CDataCompanys {
         //проверяем существование таблицы
         String controlTableSQL = "SELECT * FROM information_schema.tables"
             + " WHERE table_catalog = '" + database_name + "' AND table_name = 'order_'";
-        ResultSet resulControl = statement.executeQuery(controlTableSQL);
-        return resulControl.next();
+        ResultSet resultControl = statement.executeQuery(controlTableSQL);
+        return resultControl.next();
     }
      
     private void createTableOrder() throws SQLException {
         
         //создаем таблицу
-        String createTableSQL = "CREATE TABLE public.order_ ("
+        String createTableSQL = "CREATE TABLE order_ ("
             + " id SERIAL PRIMARY KEY,"
             + "	date_of_order      date NOT NULL,"
             + "	time_of_order      time without time zone NOT NULL,"
@@ -459,7 +483,10 @@ public class CDataCompanys {
             + " ON UPDATE CASCADE ON DELETE CASCADE,"
             + " FOREIGN KEY (full_name, personal_address) REFERENCES client (full_name, personal_address)"
             + " ON UPDATE CASCADE ON DELETE CASCADE )";    
-        statement.execute(createTableSQL);
+        boolean result = statement.execute(createTableSQL);
+        if (result) {
+           System.out.println("Создана таблица : order_"); 
+        }
     }
      
     private boolean controlSelectTableOrder(COrder order) throws SQLException {
@@ -480,7 +507,6 @@ public class CDataCompanys {
             ResultSet resultSelect = statement.executeQuery(selectTableSQL);
             while (resultSelect.next()) {
                 COrder order = new COrder();
-                //new SimpleDateFormat("dd.MM.yyyy  HH:mm").format(TimeCur.getTime())
                 order.id                 = resultSelect.getInt   ("id");
                 order.date_of_order      = resultSelect.getString("date_of_order");
                 order.time_of_order      = resultSelect.getString("time_of_order");
@@ -510,7 +536,10 @@ public class CDataCompanys {
             + "'" + order.service_name       + "',"
             + "'" + order.full_name          + "',"
             + "'" + order.personal_address   + "')";
-        statement.executeUpdate(insertTableSQL);
+        int result = statement.executeUpdate(insertTableSQL);
+        if (result > 0) {
+           System.out.println("Добавлен заказ : " + order);
+        }
     }
      
     private void updateTableOrder(COrder order) throws SQLException {
@@ -545,6 +574,8 @@ public class CDataCompanys {
     
     //----------------------------
 
+    //функции для вызова из диалогового окна
+    
     public List<CCompany> getListCompany() throws SQLException {
         return selectTableCompany();
     }
@@ -650,8 +681,5 @@ public class CDataCompanys {
     }
     
     //----------------------------
-
-
-
     
 }

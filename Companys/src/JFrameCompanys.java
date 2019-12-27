@@ -767,7 +767,9 @@ public class JFrameCompanys extends JFrame {
     
     private void jComboBox_list_companyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_list_companyActionPerformed
         
+        //определяем текущую компанию
         CCompany company = (CCompany)jComboBox_list_company.getSelectedItem();
+        //устанавливаем данные по текущей компании
         setDataCompany(company);
     }//GEN-LAST:event_jComboBox_list_companyActionPerformed
 
@@ -775,13 +777,16 @@ public class JFrameCompanys extends JFrame {
     private void jButton_add_companyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_add_companyActionPerformed
         
         CCompany company = new CCompany();
+        //добавляем в список компаний новую компанию
         jComboBox_list_company.addItem(company);
+        //делаем эту компанию текущей
         jComboBox_list_company.setSelectedItem(company);
     }//GEN-LAST:event_jButton_add_companyActionPerformed
 
     
     private void jButton_delete_companyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_delete_companyActionPerformed
         
+        //определяем текущую компанию
         CCompany company = (CCompany)jComboBox_list_company.getSelectedItem();
         try {
             CDC.deleteCompany(company);
@@ -809,6 +814,7 @@ public class JFrameCompanys extends JFrame {
     
     private void jButton_cancel_companyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cancel_companyActionPerformed
 
+        //отмена изменений
         CCompany company = (CCompany)jComboBox_list_company.getSelectedItem();
         setDataCompany(company);
     }//GEN-LAST:event_jButton_cancel_companyActionPerformed
@@ -996,6 +1002,7 @@ public class JFrameCompanys extends JFrame {
         
         COrder order = new COrder();
         jComboBox_list_order.addItem(order);
+        //делаем текущим
         jComboBox_list_order.setSelectedItem(order);
     }//GEN-LAST:event_jButton_add_orderActionPerformed
 
@@ -1042,6 +1049,7 @@ public class JFrameCompanys extends JFrame {
             if(panel == jPanel_company) {
                 initCompany();
                 if(jComboBox_list_company.getItemCount() > 0)
+                    //делаем текущей первую компанию
                     jComboBox_list_company.setSelectedIndex(0);
             }
             else
@@ -1176,6 +1184,7 @@ public class JFrameCompanys extends JFrame {
             jComboBox_list_company_in_specialization.addItem(listCompany.get(i).company_name);
         }
         
+        //чистим и заполняем комбобокс
         jComboBox_list_service_in_specialization.removeAllItems();
         List<CService> listService = CDC.getListService();
         for (int i = 0; i < listService.size(); i++) {
@@ -1204,6 +1213,7 @@ public class JFrameCompanys extends JFrame {
             jComboBox_list_order.addItem(order);
         }
         
+        jComboBox_list_rating.removeAllItems();
         for(ERating rating : ERating.values()) {
             jComboBox_list_rating.addItem(rating);
         }
@@ -1222,6 +1232,7 @@ public class JFrameCompanys extends JFrame {
 
         jComboBox_list_full_name.removeAllItems();
         List<CClient> listClient = CDC.getListClient();
+        //формируем список фамилий клиентов
         List<String> listClientName = new ArrayList<>();
         for (int i = 0; i < listClient.size(); i++) {
             String clientName = listClient.get(i).full_name;
@@ -1229,6 +1240,7 @@ public class JFrameCompanys extends JFrame {
                 listClientName.add(clientName);
         }
         for (int i = 0; i < listClientName.size(); i++) {
+            //заполняем комбобокс фамилиями клиентов
             jComboBox_list_full_name.addItem(listClientName.get(i));
         }
     }
@@ -1241,6 +1253,7 @@ public class JFrameCompanys extends JFrame {
         List<CClient> listClient = CDC.getListClient();
         for (int i = 0; i < listClient.size(); i++) {
             CClient client = listClient.get(i);
+            //формируем список адресов для клиента с заданной фамилией
             if (client.full_name.equals(clientName))
                 jComboBox_list_personal_address.addItem(client.personal_address);
         }
@@ -1254,13 +1267,13 @@ public class JFrameCompanys extends JFrame {
             jTextField_address.setText("");
             jTextField_holder.setText("");
             jFormattedTextField_phone_number.setText("");
-            return;
         }
-        
-        jTextField_company_name.setText(company.company_name);
-        jTextField_address.setText(company.address);
-        jTextField_holder.setText(company.holder);
-        jFormattedTextField_phone_number.setText(company.phone_number);
+        else {
+            jTextField_company_name.setText(company.company_name);
+            jTextField_address.setText(company.address);
+            jTextField_holder.setText(company.holder);
+            jFormattedTextField_phone_number.setText(company.phone_number);
+        }
     }
 
     
@@ -1269,11 +1282,11 @@ public class JFrameCompanys extends JFrame {
         if (service == null) {
             jTextField_service_name.setText("");
             jTextField_service_area.setText("");
-            return;
         } 
-        
-        jTextField_service_name.setText(service.service_name);
-        jTextField_service_area.setText(service.service_area);
+        else {
+            jTextField_service_name.setText(service.service_name);
+            jTextField_service_area.setText(service.service_area);
+        }
     }
     
     
@@ -1281,17 +1294,18 @@ public class JFrameCompanys extends JFrame {
         
         String company_name = (String) jComboBox_list_company_in_specialization.getSelectedItem();
         String service_name = (String) jComboBox_list_service_in_specialization.getSelectedItem();
-        
+        //ищем стоимость заданной услуги для заданной компании
+        int price = 0;
         List<CSpecialization> listSpecialization = CDC.getListSpecialization();
         for (int i = 0; i < listSpecialization.size(); i++) {
             CSpecialization specialization = listSpecialization.get(i);
             if (specialization.company_name.equals(company_name) &&
                 specialization.service_name.equals(service_name)) {
-                jTextField_price.setText(Integer.toString(specialization.price));
-                return;
+                price = specialization.price;
+                break;
             }
         }
-        jTextField_price.setText("");
+        jTextField_price.setText((price > 0) ? Integer.toString(price) : "");
     }
     
     
@@ -1301,12 +1315,12 @@ public class JFrameCompanys extends JFrame {
             jTextField_full_name.setText("");
             jTextField_personal_address.setText("");
             jFormattedTextField_personal_phone_number.setText("");
-            return;
         }
-        
-        jTextField_full_name.setText(client.full_name);
-        jTextField_personal_address.setText(client.personal_address);
-        jFormattedTextField_personal_phone_number.setText(client.personal_phone_number);
+        else {
+            jTextField_full_name.setText(client.full_name);
+            jTextField_personal_address.setText(client.personal_address);
+            jFormattedTextField_personal_phone_number.setText(client.personal_phone_number);
+        }
     }
     
     
@@ -1316,17 +1330,17 @@ public class JFrameCompanys extends JFrame {
             jFormattedTextField_date_of_order.setText("");
             jFormattedTextField_time_of_order.setText("");
             jTextField_employee_full_name.setText("");
-            return;
         }
-        
-        jFormattedTextField_date_of_order.setText(order.date_of_order);
-        jFormattedTextField_time_of_order.setText(order.time_of_order);
-        jTextField_employee_full_name.setText(order.employee_full_name);
-        jComboBox_list_rating.setSelectedItem(ERating.getRating(order.rating));
-        jComboBox_list_company_in_order.setSelectedItem(order.company_name);
-        jComboBox_list_service_in_order.setSelectedItem(order.service_name);
-        jComboBox_list_full_name.setSelectedItem(order.full_name);
-        jComboBox_list_personal_address.setSelectedItem(order.personal_address);
+        else {
+            jFormattedTextField_date_of_order.setText(order.date_of_order);
+            jFormattedTextField_time_of_order.setText(order.time_of_order);
+            jTextField_employee_full_name.setText(order.employee_full_name);
+            jComboBox_list_rating.setSelectedItem(ERating.getRating(order.rating));
+            jComboBox_list_company_in_order.setSelectedItem(order.company_name);
+            jComboBox_list_service_in_order.setSelectedItem(order.service_name);
+            jComboBox_list_full_name.setSelectedItem(order.full_name);
+            jComboBox_list_personal_address.setSelectedItem(order.personal_address);
+        }
     }
     
     
@@ -1502,7 +1516,6 @@ public class JFrameCompanys extends JFrame {
             return false;
         }
         
-        //jComboBox_list_rating
         ERating eRating = (ERating) jComboBox_list_rating.getSelectedItem();
         if (eRating == null) {
             JOptionPane.showMessageDialog(JFrameCompanys.this, 

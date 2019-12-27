@@ -4,10 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/User/Documents/NetBeansProjects/Companys/src/CCompany.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Companys/src/CService.java</file>
             <file>file:/C:/Users/User/Documents/NetBeansProjects/Companys/src/CDataCompanys.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Companys/src/JFrameCompanys.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Companys/src/CClient.java</file>
             <file>file:/C:/Users/User/Documents/NetBeansProjects/Companys/src/COrder.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Companys/src/JFrameCompanys.java</file>
             <file>file:/C:/Users/User/Documents/NetBeansProjects/Companys/src/ERating.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Companys/src/CSpecialization.java</file>
         </group>
     </open-files>
 </project-private>
